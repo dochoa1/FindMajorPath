@@ -30,7 +30,7 @@ public class FindPath {
 	 * Initialize file and courseMap - make sure filename is correct here
 	 */
 	public static void init() throws NumberFormatException, IOException{
-		file = new File("ShortestPathMajorCS.csv");    //Change this if file is not found
+		file = new File("CoursesCSVs/ShortestPathMajorCS.csv");    //Change this if file is not found
 		stuInfo = new StudentInfo();
 		
 		courseMap = createCourses();
