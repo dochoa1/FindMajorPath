@@ -3,12 +3,12 @@
               Any modifications will be overwritten.
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="AlgorithmsFinal">
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="FindMajorPath">
     <property environment="env"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
-    <path id="AlgorithmsFinal.classpath">
+    <path id="FindMajorPath.classpath">
         <pathelement location="bin"/>
         <pathelement location="library/opencsv-3.8.jar"/>
     </path>
@@ -31,7 +31,7 @@
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
             <src path="src"/>
-            <classpath refid="AlgorithmsFinal.classpath"/>
+            <classpath refid="FindMajorPath.classpath"/>
         </javac>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
@@ -50,12 +50,12 @@
     </target>
     <target name="FindPath">
         <java classname="FindPath" failonerror="true" fork="yes">
-            <classpath refid="AlgorithmsFinal.classpath"/>
+            <classpath refid="FindMajorPath.classpath"/>
         </java>
     </target>
     <target name="testPath">
         <java classname="testPath" failonerror="true" fork="yes">
-            <classpath refid="AlgorithmsFinal.classpath"/>
+            <classpath refid="FindMajorPath.classpath"/>
         </java>
     </target>
 </project>
