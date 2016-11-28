@@ -1,5 +1,4 @@
 import java.io.File;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import com.opencsv.CSVReader;
 
 public class FindPath {
 	
-	static File file; 
 	static Map<CourseID, Course> courseMap;     //Map containing all courses in inputtedFile
 	static StudentInfo stuInfo;
 	static CourseTree courseTree;
@@ -30,10 +28,12 @@ public class FindPath {
 	 * Initialize file and courseMap - make sure filename is correct here
 	 */
 	public static void init() throws NumberFormatException, IOException{
-		file = new File("CoursesCSVs/ShortestPathMajorCS.csv");    //Change this if file is not found
+		Map<CourseID, Course> courseMap1 = createCourses(new File("CoursesCSVs/ShortestPathMajorCS.csv"));
+		Map<CourseID, Course> courseMap2 = createCourses(new File("CoursesCSVs/ShortestPathMajorMATH.csv"));
+		courseMap = mergeMaps(courseMap1, courseMap2);
+		
 		stuInfo = new StudentInfo();
 		
-		courseMap = createCourses();
 		createStudentCourses();
 	}
 	
@@ -46,7 +46,6 @@ public class FindPath {
 		init();
 		
 		courseTree = new CourseTree(courseMap, stuInfo);
-		courseTree.removeTakenCourses();
 	
 		//Print out all key/value pairs in the courseMap
 //		for (Map.Entry<CourseID, Course> entry : courseMap.entrySet()){
@@ -63,7 +62,7 @@ public class FindPath {
 	/*
 	 * Creates a Map of course objects - these are all courses contained in the given CSV
 	 */
-	private static Map<CourseID, Course> createCourses() throws NumberFormatException, IOException{
+	private static Map<CourseID, Course> createCourses(File file) throws NumberFormatException, IOException{
 		Map<CourseID, Course> courseMap = new HashMap<CourseID, Course>();
 		
 		@SuppressWarnings("resource")
@@ -94,7 +93,7 @@ public class FindPath {
 	 */
 	
 	private static void createStudentCourses (){
-		ArrayList<Course> studentCourseList = new ArrayList<Course>();
+		Map<Course, Integer> studentCourseList = new HashMap<Course, Integer>();
 				
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner (System.in);
@@ -133,6 +132,7 @@ public class FindPath {
 		stuInfo.setNaturalSci(scanner.nextInt());
 		System.out.print("How many HumanFArts classes have you taken? ");
 		stuInfo.setHumanFArts(scanner.nextInt());
+		
 		while (true){
 			System.out.print("Enter a course Department or QUIT if no more courses:  ");  
 			String deptName = scanner.next().toUpperCase(); // Get what the user types.
@@ -144,7 +144,7 @@ public class FindPath {
 			CourseID testID = new CourseID(deptName, courseNum);
 			System.out.println(testID);
 			if (courseMap.containsKey(testID)) {
-				studentCourseList.add(courseMap.get(testID));
+				studentCourseList.put(courseMap.get(testID), new Integer(1));
 				System.out.println(deptName + " " + courseNum + " has been added.");
 			}
 			else {
@@ -153,16 +153,9 @@ public class FindPath {
 		}
 		scanner.close();
 					
-	stuInfo.setStudentCourses( studentCourseList);
+	stuInfo.setStudentCourses(studentCourseList);
 	}
 
-	public static File getFile() {
-		return file;
-	}
-
-	public static void setFile(File file) {
-		FindPath.file = file;
-	}
 
 	public static Map<CourseID, Course> getCourseMap() {
 		return courseMap;
@@ -179,6 +172,16 @@ public class FindPath {
 	public static void setStuInfo(StudentInfo stuInfo) {
 		FindPath.stuInfo = stuInfo;
 	}
+	
+	public static Map<CourseID, Course> mergeMaps(Map<CourseID, Course> map1, Map<CourseID, Course> map2){
+		for (Map.Entry<CourseID,Course> entry : map2.entrySet()){
+			if (map1.get(entry.getKey()) == null){
+				map1.put(entry.getKey(),entry.getValue());
+			}
+		}
+		return map1;
+	}
+	
 	
 }
 	

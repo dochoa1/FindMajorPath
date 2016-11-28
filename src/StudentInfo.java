@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Map;
+
 
 /**
  * 
@@ -10,7 +12,7 @@ public class StudentInfo {
 
 	//We also have to add a list of majors to studentInfo
 	
-	ArrayList<Course> studentCourses;
+	Map<Course, Integer> studentCourses;
 	
 	int year;
 	
@@ -48,11 +50,11 @@ public class StudentInfo {
 	}
 	
 
-	public ArrayList<Course> getStudentCourses() {
+	public Map<Course, Integer> getStudentCourses() {
 		return studentCourses;
 	}
-	public void setStudentCourses(ArrayList<Course> studentCourses) {
-		this.studentCourses = studentCourses;
+	public void setStudentCourses(Map<Course, Integer> studentCourseList) {
+		this.studentCourses = studentCourseList;
 	}
 	public Boolean getComp123() {
 		return comp123;
