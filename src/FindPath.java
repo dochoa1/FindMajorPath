@@ -19,9 +19,19 @@ import com.opencsv.CSVReader;
 
 public class FindPath {
 	
-	static Map<CourseID, Course> courseMap;     //Map containing all courses in inputtedFile
+	
+	//BE SURE TO SET THESE BEFORE RUNNING THE PROGRAM!!!
+	public static final int CURRENT_YEAR = 2017;
+	public static final String CURRENT_SEMESTER = "SPRING"; //Can be either "SPRING" or "FALL"
+	
+	
+	//Map containing all courses
+	static Map<CourseID, Course> courseMap;    
+	//Object that stores all important information about the user
 	static StudentInfo stuInfo;
+	//Tree that we use to find shortest path for the major
 	static CourseTree courseTree;
+	
 	
 	
 	/*
@@ -35,6 +45,7 @@ public class FindPath {
 		stuInfo = new StudentInfo();
 		
 		createStudentCourses();
+		courseTree = new CourseTree(courseMap, stuInfo);
 	}
 	
 	
@@ -45,7 +56,14 @@ public class FindPath {
 	public static void main(String[] args) throws Exception {
 		init();
 		
-		courseTree = new CourseTree(courseMap, stuInfo);
+		CourseID testID = new CourseID("COMP", 484);
+		boolean satisfied = courseTree.preReqsSatisfied(courseTree.getRoot(), courseMap.get(testID));
+		System.out.println("Are pre-reqs for COMP 484 met?");
+		System.out.println(satisfied);
+		
+		boolean courseNotTaken = courseTree.courseNotTaken(courseTree.getRoot(), courseMap.get(testID));
+		System.out.println("Have you NOT taken COMP 484 yet? ");
+		System.out.println(courseNotTaken);
 	
 		//Print out all key/value pairs in the courseMap
 //		for (Map.Entry<CourseID, Course> entry : courseMap.entrySet()){
@@ -106,33 +124,32 @@ public class FindPath {
 			System.out.print("You entered something wrong sorry yo.");
 			System.exit(0);
 		}
-		System.out.print("Have you satisfied your writing requirement? (Y or N): ");
-		if (scanner.next().toUpperCase().equals("Y")){
-			stuInfo.setWriting(true);
-		}
-		System.out.print("Have you satisfied your U.S. Identities requirement? (Y or N): ");
-		if (scanner.next().toUpperCase().equals("Y")){
-			stuInfo.setUsID(true);
-		}
-		System.out.print("Have you satisfied your Internationalism requirement? (Y or N): ");
-		if (scanner.next().toUpperCase().equals("Y")){
-			stuInfo.setInternationalism(true);
-		}
-		System.out.print("Have you satisfied your Quantitative requirement? (Y or N): ");
-		if (scanner.next().toUpperCase().equals("Y")){
-			stuInfo.setQuantitative(true);
-		}
-		System.out.print("Have you satisfied your language requirement? (Y or N): ");
-		if (scanner.next().toUpperCase().equals("Y")){
-			stuInfo.setLanguage(true);
-		}
-		System.out.print("How many Social Science classes have you taken? ");
-		stuInfo.setSocialSci(scanner.nextInt());
-		System.out.print("How many Natural Science classes have you taken? ");
-		stuInfo.setNaturalSci(scanner.nextInt());
-		System.out.print("How many HumanFArts classes have you taken? ");
-		stuInfo.setHumanFArts(scanner.nextInt());
 		
+//		
+//		System.out.print("Have you satisfied your writing requirement? (Y or N): ");
+//		if (scanner.next().toUpperCase().equals("Y")){
+//			stuInfo.setWriting(true);}
+//		System.out.print("Have you satisfied your U.S. Identities requirement? (Y or N): ");
+//		if (scanner.next().toUpperCase().equals("Y")){
+//			stuInfo.setUsID(true);}
+//		System.out.print("Have you satisfied your Internationalism requirement? (Y or N): ");
+//		if (scanner.next().toUpperCase().equals("Y")){
+//			stuInfo.setInternationalism(true);}
+//		System.out.print("Have you satisfied your Quantitative requirement? (Y or N): ");
+//		if (scanner.next().toUpperCase().equals("Y")){
+//			stuInfo.setQuantitative(true);}
+//		System.out.print("Have you satisfied your language requirement? (Y or N): ");
+//		if (scanner.next().toUpperCase().equals("Y")){
+//			stuInfo.setLanguage(true);}
+//		System.out.print("How many Social Science classes have you taken? ");
+//		stuInfo.setSocialSci(scanner.nextInt());
+//		System.out.print("How many Natural Science classes have you taken? ");
+//		stuInfo.setNaturalSci(scanner.nextInt());
+//		System.out.print("How many HumanFArts classes have you taken? ");
+//		stuInfo.setHumanFArts(scanner.nextInt());
+		
+		
+		//Gather inputted courses from the user, store them in studentInfo object
 		while (true){
 			System.out.print("Enter a course Department or QUIT if no more courses:  ");  
 			String deptName = scanner.next().toUpperCase(); // Get what the user types.

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class Node {
 	
 
-	
 	//General Requirements
 	StudentInfo stuInfo;
 	

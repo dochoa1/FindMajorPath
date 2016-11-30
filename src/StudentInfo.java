@@ -14,7 +14,12 @@ public class StudentInfo {
 	
 	Map<Course, Integer> studentCourses;
 	
+	int yearInSchool;
+	
 	int year;
+	
+
+	String semester;
 	
 	//Here we can set flags to determine if certain requirements have been met
 	//Example:
@@ -46,7 +51,8 @@ public class StudentInfo {
 	
 	
 	public StudentInfo(){
-		
+		this.year = FindPath.CURRENT_YEAR;
+		this.semester = FindPath.CURRENT_SEMESTER;
 	}
 	
 
@@ -171,4 +177,22 @@ public class StudentInfo {
 		this.year = year;
 	}
 		
+	public int getYearInSchool() {
+		return yearInSchool;
+	}
+
+
+	public void setYearInSchool(int yearInSchool) {
+		this.yearInSchool = yearInSchool;
+	}
+
+
+	public String getSemester() {
+		return semester;
+	}
+
+
+	public void setSemester(String semester) {
+		this.semester = semester;
+	}
 }
