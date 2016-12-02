@@ -38,6 +38,8 @@ public class FindPath {
 	 * Initialize file and courseMap - make sure filename is correct here
 	 */
 	public static void init() throws NumberFormatException, IOException{
+		//There a very specific ways that these csv files need to be formatted so make sure they fit ALL the following 
+		//specifications: ILL PUT THESE LATER
 		Map<CourseID, Course> courseMap1 = createCourses(new File("CoursesCSVs/ShortestPathMajorCS.csv"));
 		Map<CourseID, Course> courseMap2 = createCourses(new File("CoursesCSVs/ShortestPathMajorMATH.csv"));
 		courseMap = mergeMaps(courseMap1, courseMap2);
@@ -46,6 +48,13 @@ public class FindPath {
 		
 		createStudentCourses();
 		courseTree = new CourseTree(courseMap, stuInfo);
+		
+		System.out.println("Going to start testing the scoring function: ");
+		for (Course value : courseMap1.values()){
+			System.out.print(value.getDept() + " ");
+			System.out.print(value.getCourseNum() + " ");
+			System.out.println(courseTree.generateScore(courseTree.getRoot(), value));
+		}
 	}
 	
 	
@@ -98,7 +107,7 @@ public class FindPath {
 	    		//Create Course object
 	    		Course course = new Course(Integer.parseInt(nextLine[0]), nextLine[1], Integer.parseInt(nextLine[2]), 
 	    									nextLine[3], nextLine[4], Integer.parseInt(nextLine[5]), Integer.parseInt(nextLine[6]),
-	    									nextLine[7], nextLine[8], Integer.parseInt(nextLine[9]));
+	    									nextLine[7], nextLine[8], Integer.parseInt(nextLine[9]), nextLine[10]);
 	    		//Add newly created entry to the map of courses
 	    		courseMap.put(id, course);
 	    	}
@@ -115,7 +124,7 @@ public class FindPath {
 				
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner (System.in);
-		System.out.print("What year in college are you? (1 - 4)");
+		System.out.print("What year in college are you? (1 - 4) ");
 		int stuYear = scanner.nextInt();
 		if (stuYear >= 1 && stuYear <= 4){
 			stuInfo.setYear(stuYear);
@@ -124,7 +133,18 @@ public class FindPath {
 			System.out.print("You entered something wrong sorry yo.");
 			System.exit(0);
 		}
-		
+		ArrayList<String> majors = new ArrayList<String>(); 
+		int majorsIndex = 0;
+		while(true){
+			System.out.print("What departments are your majors? (Enter QUIT when you are done): ");
+			String major = scanner.next().toUpperCase();
+			if (major.equals("QUIT")){
+				break;
+			}
+			majors.add(major);
+			majorsIndex ++;
+		}
+		stuInfo.setMajors(majors);
 //		
 //		System.out.print("Have you satisfied your writing requirement? (Y or N): ");
 //		if (scanner.next().toUpperCase().equals("Y")){

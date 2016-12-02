@@ -18,6 +18,7 @@ public class StudentInfo {
 	
 	int year;
 	
+	ArrayList<String> majors;
 
 	String semester;
 	
@@ -185,14 +186,16 @@ public class StudentInfo {
 	public void setYearInSchool(int yearInSchool) {
 		this.yearInSchool = yearInSchool;
 	}
-
-
 	public String getSemester() {
 		return semester;
 	}
-
-
 	public void setSemester(String semester) {
 		this.semester = semester;
+	}
+	public ArrayList<String> getMajors() {
+		return majors;
+	}
+	public void setMajors(ArrayList<String> majors) {
+		this.majors = majors;
 	}
 }

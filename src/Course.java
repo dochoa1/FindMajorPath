@@ -12,10 +12,13 @@ public class Course {
 	String preReqs;
 	String offered;
 	int credits;
-	
-	
-	
-	public Course(int courseID, String dept, int courseNum, String courseName, String crossListed, int required, int capstone, String preReqs, String offered, int credits){
+	String prereqFor;
+
+
+
+
+
+	public Course(int courseID, String dept, int courseNum, String courseName, String crossListed, int required, int capstone, String preReqs, String offered, int credits, String prereqFor){
 		this.courseID = courseID;
 		this.dept=dept;
 		this.courseNum=courseNum;
@@ -26,6 +29,7 @@ public class Course {
 		this.preReqs=preReqs;
 		this.offered=offered;
 		this.credits=credits;
+		this.prereqFor=prereqFor;
 	}
 
 
@@ -88,6 +92,10 @@ public class Course {
 		return credits;
 	}
 	
+	
+	public String getPrereqFor() {
+		return prereqFor;
+	}
 	
 	//Might need to change this if we ever want to print out full courses
 	public String toString(){
