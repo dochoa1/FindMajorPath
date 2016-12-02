@@ -42,7 +42,7 @@ public class StudentInfo {
 	Boolean usID;
 	Boolean internationalism;
 	Boolean quantitative;
-	Boolean language; //This could potentially take up to 4 classes. 
+	int language; //This could potentially take up to 4 classes. 
 	int socialSci; //This must be greater than or equal to two.
 	int naturalSci; //This also includes math classes, must be greater than or equal to two. 
 	int humanFArts; //Humanities/Fine Arts, this must be greater than or equal to 3. 
@@ -147,10 +147,10 @@ public class StudentInfo {
 	public void setQuantitative(Boolean quantitative) {
 		this.quantitative = quantitative;
 	}
-	public Boolean getLanguage() {
+	public int getLanguage() {
 		return language;
 	}
-	public void setLanguage(Boolean language) {
+	public void setLanguage(int language) {
 		this.language = language;
 	}
 	public int getSocialSci() {

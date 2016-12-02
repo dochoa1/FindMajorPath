@@ -42,19 +42,20 @@ public class FindPath {
 		//specifications: ILL PUT THESE LATER
 		Map<CourseID, Course> courseMap1 = createCourses(new File("CoursesCSVs/ShortestPathMajorCS.csv"));
 		Map<CourseID, Course> courseMap2 = createCourses(new File("CoursesCSVs/ShortestPathMajorMATH.csv"));
+		Map<CourseID, Course> courseMap3 = createCourses(new File("CoursesCSVs/DummyCourses.csv"));
+
 		courseMap = mergeMaps(courseMap1, courseMap2);
+		courseMap = mergeMaps(courseMap, courseMap3);
 		
 		stuInfo = new StudentInfo();
 		
 		createStudentCourses();
 		courseTree = new CourseTree(courseMap, stuInfo);
 		
-		System.out.println("Going to start testing the scoring function: ");
-		for (Course value : courseMap1.values()){
-			System.out.print(value.getDept() + " ");
-			System.out.print(value.getCourseNum() + " ");
-			System.out.println(courseTree.generateScore(courseTree.getRoot(), value));
-		}
+		//Make call to our tests here
+		test();
+		
+
 	}
 	
 	
@@ -65,22 +66,8 @@ public class FindPath {
 	public static void main(String[] args) throws Exception {
 		init();
 		
-		CourseID testID = new CourseID("COMP", 484);
-		boolean satisfied = courseTree.preReqsSatisfied(courseTree.getRoot(), courseMap.get(testID));
-		System.out.println("Are pre-reqs for COMP 484 met?");
-		System.out.println(satisfied);
-		
-		boolean courseNotTaken = courseTree.courseNotTaken(courseTree.getRoot(), courseMap.get(testID));
-		System.out.println("Have you NOT taken COMP 484 yet? ");
-		System.out.println(courseNotTaken);
-	
-		//Print out all key/value pairs in the courseMap
-//		for (Map.Entry<CourseID, Course> entry : courseMap.entrySet()){
-//		    System.out.println(entry.getKey() + "/" + entry.getValue());}
-		
 
-		//Check to see how many Courses got added to studentCourses 
-		//System.out.println(studentCourses.size());
+
 		
 
 	}
@@ -136,7 +123,7 @@ public class FindPath {
 		ArrayList<String> majors = new ArrayList<String>(); 
 		int majorsIndex = 0;
 		while(true){
-			System.out.print("What departments are your majors? (Enter QUIT when you are done): ");
+			System.out.print("What departments do you plan do major in? (Enter QUIT when you are done): ");
 			String major = scanner.next().toUpperCase();
 			if (major.equals("QUIT")){
 				break;
@@ -145,28 +132,30 @@ public class FindPath {
 			majorsIndex ++;
 		}
 		stuInfo.setMajors(majors);
-//		
-//		System.out.print("Have you satisfied your writing requirement? (Y or N): ");
-//		if (scanner.next().toUpperCase().equals("Y")){
-//			stuInfo.setWriting(true);}
-//		System.out.print("Have you satisfied your U.S. Identities requirement? (Y or N): ");
-//		if (scanner.next().toUpperCase().equals("Y")){
-//			stuInfo.setUsID(true);}
-//		System.out.print("Have you satisfied your Internationalism requirement? (Y or N): ");
-//		if (scanner.next().toUpperCase().equals("Y")){
-//			stuInfo.setInternationalism(true);}
-//		System.out.print("Have you satisfied your Quantitative requirement? (Y or N): ");
-//		if (scanner.next().toUpperCase().equals("Y")){
-//			stuInfo.setQuantitative(true);}
-//		System.out.print("Have you satisfied your language requirement? (Y or N): ");
-//		if (scanner.next().toUpperCase().equals("Y")){
-//			stuInfo.setLanguage(true);}
-//		System.out.print("How many Social Science classes have you taken? ");
-//		stuInfo.setSocialSci(scanner.nextInt());
-//		System.out.print("How many Natural Science classes have you taken? ");
-//		stuInfo.setNaturalSci(scanner.nextInt());
-//		System.out.print("How many HumanFArts classes have you taken? ");
-//		stuInfo.setHumanFArts(scanner.nextInt());
+		
+		System.out.print("Have you satisfied your writing requirement? (Y or N): ");
+		if (scanner.next().toUpperCase().equals("Y")){
+			stuInfo.setWriting(true);}
+		System.out.print("Have you satisfied your U.S. Identities requirement? (Y or N): ");
+		if (scanner.next().toUpperCase().equals("Y")){
+			stuInfo.setUsID(true);}
+		System.out.print("Have you satisfied your Internationalism requirement? (Y or N): ");
+		if (scanner.next().toUpperCase().equals("Y")){
+			stuInfo.setInternationalism(true);}
+		System.out.print("Have you satisfied your Quantitative requirement? (Y or N): ");
+		if (scanner.next().toUpperCase().equals("Y")){
+			stuInfo.setQuantitative(true);}
+		
+		System.out.print("How many language classes have you taken (1-4): ");
+		if (scanner.next().toUpperCase().equals("Y")){
+			stuInfo.setLanguage(scanner.nextInt());}
+		
+		System.out.print("How many Social Science classes have you taken? ");
+		stuInfo.setSocialSci(scanner.nextInt());
+		System.out.print("How many Natural Science classes have you taken? ");
+		stuInfo.setNaturalSci(scanner.nextInt());
+		System.out.print("How many HumanFArts classes have you taken? ");
+		stuInfo.setHumanFArts(scanner.nextInt());
 		
 		
 		//Gather inputted courses from the user, store them in studentInfo object
@@ -217,6 +206,40 @@ public class FindPath {
 			}
 		}
 		return map1;
+	}
+
+	
+	
+	private static void test(){
+		
+		courseTree.generateChildren(courseTree.root);
+		
+//		CourseID testID = new CourseID("COMP", 484);
+//		boolean satisfied = courseTree.preReqsSatisfied(courseTree.getRoot(), courseMap.get(testID));
+//		System.out.println("Are pre-reqs for COMP 484 met?");
+//		System.out.println(satisfied);
+//		
+//		boolean courseNotTaken = courseTree.courseNotTaken(courseTree.getRoot(), courseMap.get(testID));
+//		System.out.println("Have you NOT taken COMP 484 yet? ");
+//		System.out.println(courseNotTaken);
+		
+//		System.out.println("Going to start testing the scoring function: ");
+//		for (Course value : courseMap.values()){
+//			System.out.print(value.getCourseName() + " ");
+//			System.out.println(courseTree.generateScore(courseTree.getRoot(), value));
+//		}
+		
+
+		
+		
+		//Print out all key/value pairs in the courseMap
+//		for (Map.Entry<CourseID, Course> entry : courseMap.entrySet()){
+//		    System.out.println(entry.getKey() + "/" + entry.getValue());}
+		
+
+		//Check to see how many Courses got added to studentCourses 
+		//System.out.println(studentCourses.size());
+		
 	}
 	
 	

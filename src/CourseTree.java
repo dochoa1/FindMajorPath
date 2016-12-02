@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Queue;
 
 /**
@@ -32,7 +33,15 @@ public class CourseTree {
 		
 	//Generates all children of an inputted node
 	public void generateChildren(Node n){
+		
 		//This method will add the children instance variable for each node
+
+	    for(Entry<CourseID, Course> entry: courseMap.entrySet()) {
+	        Course c = (entry.getValue());
+	        if (isValidChildCourse(n, c) == true){
+	        	System.out.println(c.toString());
+	        }
+	    }
 		
 	}
 	
@@ -150,8 +159,10 @@ public class CourseTree {
 		
 		
 		//This has list of PreReqs as Strings (ex. "COMP 123") note, some are two courses separated by "/"
+		System.out.println(preReqs);
 		ArrayList<String> stringList =  new ArrayList<String>(Arrays.asList(preReqs.split(",")));
-		
+		System.out.println(preReqs);
+		System.out.println(stringList);
 		
 		//This has List of preReqs as Course objects
 		ArrayList<Course> preReqCourses = new ArrayList<Course>();
@@ -159,15 +170,16 @@ public class CourseTree {
 		//Need to test this somehow, this should turn strings into Course Objects
 		for (String s: stringList){
 			boolean orClassesSatisfied = true; 
+			
 			if (s.contains("/")){
-				ArrayList<String> orList = new ArrayList<String>( Arrays.asList(preReqs.split("/")));
+				ArrayList<String> orList = new ArrayList<String>( Arrays.asList(s.split("/")));
 				for (String element1 : orList){
 					ArrayList<String> orList2 = new ArrayList<String>( Arrays.asList(element1.split(" ")));
 					CourseID tempID1 = new CourseID(orList2.get(0), new Integer(orList2.get(1)));
-					if ((node.getStuInfo().studentCourses.get(tempID1) != 1)){
+					if ((node.getStuInfo().studentCourses.get(tempID1) == null)){
 						orClassesSatisfied = false;
 					}
-					if ((node.getStuInfo().studentCourses.get(tempID1) == 1)){
+					else{
 						orClassesSatisfied = true;
 					}
 				}
@@ -176,7 +188,9 @@ public class CourseTree {
 				}
 			}
 			else{
-			 ArrayList<String> stringList2 = new ArrayList<String> (Arrays.asList(preReqs.split(" ")));
+			 ArrayList<String> stringList2 = new ArrayList<String> (Arrays.asList(s.split(" ")));
+			 System.out.println(stringList2.toString());
+			 
 			 CourseID tempID = new CourseID(stringList2.get(0), new Integer(stringList2.get(1)));
 			 preReqCourses.add(courseMap.get(tempID));
 			}
@@ -256,12 +270,65 @@ public class CourseTree {
 	
 	
 	/*
+	 * If a course has been added as a suggestion for the user, this
+	 * method updates the student info object 
+	 * 
+	 */
+	//MAKE SURE THAT BEFORE THIS IS CALLED, WE DONT ADD COURSES THAT FULLFILL 
+	//GEN-EDS THAT HAVE ALREADY BEEN MET
+	public void setFlags(Node node, Course course){
+		
+		//Check for Math Dummy Course (This might be unnecessary)
+		if (course.getCourseName().equals("MATH XXX")){
+			node.stuInfo.setMathCourse(node.stuInfo.getMathCourse()+1);
+		}
+		
+		if (course.getCourseName().equals("WRITING XXX")){
+			node.stuInfo.setWriting(true);
+		}
+		
+		if (course.getCourseName().equals("USID XXX")){
+			node.stuInfo.setUsID(true);
+		}
+		
+		if (course.getCourseName().equals("INTERNAT XXX")){
+			node.stuInfo.setInternationalism(true);
+		}
+		
+		if (course.getCourseName().equals("QUANT XXX")){
+			node.stuInfo.setQuantitative(true);
+		}
+		
+		if (course.getCourseName().equals("LANG XXX")){
+			node.stuInfo.setLanguage(node.stuInfo.getLanguage()+1);
+		}
+		
+		if (course.getCourseName().equals("SOCSCI XXX")){
+			node.stuInfo.setSocialSci(node.stuInfo.getSocialSci()+1);
+		}
+		
+		if (course.getCourseName().equals("NATSCI XXX")){
+			node.stuInfo.setNaturalSci(node.stuInfo.getNaturalSci()+1);
+		}
+		
+		if (course.getCourseName().equals("HUMANFARTS XXX")){
+			node.stuInfo.setHumanFArts(node.stuInfo.getHumanFArts()+1);
+		}
+		
+	}
+	
+	
+	
+	
+	
+	/*
 	 * Increments the current semester in a given node object
 	 * BE SURE TO CALL THIS ON THE CHILD!!
 	 * 
 	 * 
 	 * Needs to be tested
 	 */
+
 	
 	
 	private void incrementSemester(Node node){
@@ -276,6 +343,7 @@ public class CourseTree {
 			node.stuInfo.setSemester("FALL");}
 	}
 
+	
 	
 	
 	
