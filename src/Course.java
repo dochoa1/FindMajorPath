@@ -15,9 +15,6 @@ public class Course {
 	String prereqFor;
 
 
-
-
-
 	public Course(int courseID, String dept, int courseNum, String courseName, String crossListed, int required, int capstone, String preReqs, String offered, int credits, String prereqFor){
 		this.courseID = courseID;
 		this.dept=dept;

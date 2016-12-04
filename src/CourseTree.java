@@ -1,8 +1,14 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
+import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * @author Danny, Kai, Spencer
@@ -32,18 +38,63 @@ public class CourseTree {
 	
 		
 	//Generates all children of an inputted node
-	public void generateChildren(Node n){
+	public CourseID[] generateChildren(Node n){
 		
 		//This method will add the children instance variable for each node
-
+		HashMap<CourseID, Integer> validCourses = new HashMap<CourseID, Integer>();
+		
 	    for(Entry<CourseID, Course> entry: courseMap.entrySet()) {
 	        Course c = (entry.getValue());
 	        if (isValidChildCourse(n, c) == true){
-	        	System.out.println(c.toString());
+	        	//System.out.print(c.toString());
+	        	validCourses.put(entry.getKey(), (Integer) generateScore(n, c));
 	        }
 	    }
-		
+	    
+	    System.out.println("Now printing out all the valid courses and their scores: ");
+	    for(Entry<CourseID, Integer> entry: validCourses.entrySet()){
+	    	System.out.println(entry.getKey().toString() + ", Score = " + entry.getValue());
+	    }
+	    
+	    
+	    ArrayList<Entry<CourseID, Integer>> sortedCourses = sortMap(validCourses);
+	    
+	    CourseID[] top4 = new CourseID[4];
+	    
+	    if (sortedCourses.size() < 4){
+	    	for(int i = 0; i < sortedCourses.size(); i++){
+	    		top4[i] = sortedCourses.get(i).getKey();
+	    	}
+	    	for(int j = 0 + sortedCourses.size(); j < 4; j++){
+	    		top4[j] = new CourseID("Free", 420);
+	    	}
+	    }
+	    
+	    else{
+	    	for(int i = 0; i < 4; i++){
+	    		if (sortedCourses.get(i).getKey() == null){
+	    			top4[i] = new CourseID("Free", 420);
+	    		}
+	    		top4[i] = sortedCourses.get(i).getKey();
+	    	}
+	    }
+	    
+	    return top4;
 	}
+	
+	//A method used to convert a map into an arrayList that is sorted according to the maps values; descending order.
+	private ArrayList<Entry<CourseID, Integer>> sortMap(HashMap<CourseID, Integer> map){
+		Set<Entry<CourseID, Integer>> set = map.entrySet();
+		ArrayList<Entry<CourseID, Integer>> list = new ArrayList<Entry<CourseID, Integer>>(set);
+		Collections.sort(list, new Comparator<Map.Entry<CourseID, Integer>>(){
+			public int compare( Map.Entry<CourseID, Integer> o1, Map.Entry<CourseID, Integer> o2)
+			{
+				return (o2.getValue()).compareTo( o1.getValue() );
+			}
+		});
+		return list;
+	}
+	
 	
 	/**
 	 * Generates a score that is indicative of how to prioritize the course. 
@@ -159,10 +210,7 @@ public class CourseTree {
 		
 		
 		//This has list of PreReqs as Strings (ex. "COMP 123") note, some are two courses separated by "/"
-		System.out.println(preReqs);
 		ArrayList<String> stringList =  new ArrayList<String>(Arrays.asList(preReqs.split(",")));
-		System.out.println(preReqs);
-		System.out.println(stringList);
 		
 		//This has List of preReqs as Course objects
 		ArrayList<Course> preReqCourses = new ArrayList<Course>();
@@ -189,7 +237,7 @@ public class CourseTree {
 			}
 			else{
 			 ArrayList<String> stringList2 = new ArrayList<String> (Arrays.asList(s.split(" ")));
-			 System.out.println(stringList2.toString());
+			 
 			 
 			 CourseID tempID = new CourseID(stringList2.get(0), new Integer(stringList2.get(1)));
 			 preReqCourses.add(courseMap.get(tempID));
@@ -205,7 +253,7 @@ public class CourseTree {
 	
 	
 	/**
-	 * Checks if the give course has already been taken by the student
+	 * Checks if the given course has already been taken by the student
 	 * @param node
 	 * @param course
 	 * @return
@@ -218,6 +266,7 @@ public class CourseTree {
 	}
 
 
+	
 	/*
 	 * Checks to see if the inputted course is offered the next semester
 	 */
@@ -245,8 +294,6 @@ public class CourseTree {
 				}	
 			}
 		}
-		
-		
 		if (semester.equals("FALL")){
 			
 			if (offered.equals("Spring") || offered.equals("Even Spring") || offered.equals("Odd Spring")){
@@ -318,9 +365,6 @@ public class CourseTree {
 	}
 	
 	
-	
-	
-	
 	/*
 	 * Increments the current semester in a given node object
 	 * BE SURE TO CALL THIS ON THE CHILD!!
@@ -329,24 +373,7 @@ public class CourseTree {
 	 * Needs to be tested
 	 */
 
-	
-	
-	private void incrementSemester(Node node){
-		int year = node.getStuInfo().getYear();
-		String semester = node.getStuInfo().getSemester();
-		
-		if (semester.equals("FALL")){
-			node.stuInfo.setYear(year+1);
-			node.stuInfo.setSemester("SPRING");}
-		
-		else{
-			node.stuInfo.setSemester("FALL");}
-	}
 
-	
-	
-	
-	
 	
 	public Map<CourseID, Course> getCourseMap() {
 		return courseMap;

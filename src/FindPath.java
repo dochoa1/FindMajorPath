@@ -66,10 +66,6 @@ public class FindPath {
 	public static void main(String[] args) throws Exception {
 		init();
 		
-
-
-		
-
 	}
 	
 	
@@ -212,7 +208,20 @@ public class FindPath {
 	
 	private static void test(){
 		
-		courseTree.generateChildren(courseTree.root);
+		int year = stuInfo.getYear();
+		int semestersLeft = (8 - (year * 2) + 1);
+		CourseID[][] allSemesters = recurseSemesters(courseTree.getRoot(), new CourseID[semestersLeft + 1][4], 0, year);
+		
+		for(int i = 0; i < semestersLeft; i++){
+			System.out.println("Semester " + (i + (8 - semestersLeft) + 1) + " Courses: ");
+			for(int j = 0; j < 4; j++){
+				System.out.print(allSemesters[i][j] + " ");
+			}
+			System.out.println("");
+		}
+		
+		//CourseID[] top4 = courseTree.generateChildren(courseTree.root);
+		
 		
 //		CourseID testID = new CourseID("COMP", 484);
 //		boolean satisfied = courseTree.preReqsSatisfied(courseTree.getRoot(), courseMap.get(testID));
@@ -239,7 +248,24 @@ public class FindPath {
 
 		//Check to see how many Courses got added to studentCourses 
 		//System.out.println(studentCourses.size());
-		
+	}
+	
+	private static CourseID[][] recurseSemesters(Node node, CourseID[][] allSemesters, int semester, int stuYear){
+		if (semester == (8 - (stuYear * 2) + 1)){
+			return allSemesters;
+		}
+		allSemesters[semester] = courseTree.generateChildren(node);
+		node.setC1(courseMap.get(allSemesters[semester][0]));
+		node.setC2(courseMap.get(allSemesters[semester][1]));
+		node.setC3(courseMap.get(allSemesters[semester][2]));
+		node.setC4(courseMap.get(allSemesters[semester][3]));
+		node.updateStuCourses();
+		Node child = new Node();
+		node.setChild(child);
+		child.setParent(node);
+		child.setStuInfo(child.getParent().getStuInfo());
+		child.incrementSemester();
+		return recurseSemesters(child, allSemesters, semester + 1, stuYear);
 	}
 	
 	

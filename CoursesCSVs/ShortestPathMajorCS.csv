@@ -3,15 +3,15 @@ Course ID,Department,Course Number,Course Name,Cross-listed,Required?,Capstone C
 91016,COMP,124,Object-Oriented Programming and Data Structures,N/A,1,0,COMP 123,All,4,"COMP 221,COMP 225,COMP 240,COMP 261,COMP 440,MATH 437"
 91019,COMP,221,Algorithm Design and Analysis,N/A,1,0,"COMP 124,MATH 279",Fall,4,"COMP 221,COMP 440,COMP 445,COMP 484"
 91020,COMP,225,Software Design and Development,N/A,1,0,COMP 124,Spring,4,COMP 225
-91021,COMP,240,Computer Systems Organization,N/A,1,0,COMP 124 ,Fall,4,"COMP 342,COMP 445"
-91022,COMP,261,Theory of Computation,MATH 361 ,1,0,"COMP 124,MATH 279",Spring,4,N/A
+91021,COMP,240,Computer Systems Organization,N/A,1,0,COMP 124,Fall,4,"COMP 342,COMP 445"
+91022,COMP,261,Theory of Computation,MATH 361,1,0,"COMP 124,MATH 279",Spring,4,N/A
 91025,COMP,302,Introduction to Database Management Systems,N/A,0,0,N/A,Spring,4,N/A
 91028,COMP,340,Digital Electronics,PHYS 340,0,0,MATH 137,Even Spring,4,N/A
 91029,COMP,342,Operating Systems and Computer Architecture,N/A,0,1,COMP 240,Odd Spring,4,N/A
 91031,COMP,346,Internet Computing,N/A,0,1,COMP 225,Even Fall,4,N/A
-91032,COMP,365,Computational Linear Algebra,MATH 365,0,0,"COMP 123,MATH 236 ",Spring,4,N/A
+91032,COMP,365,Computational Linear Algebra,MATH 365,0,0,"COMP 123,MATH 236",Spring,4,N/A
 91034,COMP,380,Bodies/Minds: AI Robotics,N/A,0,1,COMP 221,Even Spring,4,N/A
 91038,COMP,440,Collective Intelligence,N/A,0,1,"COMP 124,COMP 221",Odd Fall,4,N/A
 91039,COMP,445,Parallel and Distributed Processing,N/A,0,1,"COMP 240,COMP 221",Odd Fall,4,N/A
-91033,COMP,479,Network Science,MATH 479 ,0,1,"MATH 236,MATH 379,COMP 123",Even Fall,4,N/A
-91040,COMP,484,Introduction to Artificial Intelligence,NEUR 484 ,0,1,COMP 221,Even Fall,4,N/A
+91033,COMP,479,Network Science,MATH 479,0,1,"MATH 236,MATH 379,COMP 123",Even Fall,4,N/A
+91040,COMP,484,Introduction to Artificial Intelligence,NEUR 484,0,1,COMP 221,Even Fall,4,N/A

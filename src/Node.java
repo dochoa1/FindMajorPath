@@ -17,7 +17,7 @@ public class Node {
 	Course c3;
 	Course c4;
 	
-	ArrayList<Node> children;
+	Node child;
 	
 	Node parent;
 	
@@ -31,7 +31,35 @@ public class Node {
 
 	public Node(){
 	}
+	
+	
+	public Node getParent() {
+		return parent;
+	}
 
+	public void setParent(Node parent) {
+		this.parent = parent;
+	}
+
+	public void updateStuCourses(){
+		stuInfo.studentCourses.put(c1, 1);
+		stuInfo.studentCourses.put(c2, 1);
+		stuInfo.studentCourses.put(c3, 1);
+		stuInfo.studentCourses.put(c4, 1);
+	}
+	
+	public void incrementSemester(){
+		int year = stuInfo.getYear();
+		String semester = stuInfo.getSemester();
+		
+		if (semester.equals("FALL")){
+			stuInfo.setYear(year+1);
+			stuInfo.setSemester("SPRING");}
+		
+		else{
+			stuInfo.setSemester("FALL");}
+	}
+	
 	public StudentInfo getStuInfo() {
 		return stuInfo;
 	}
@@ -72,12 +100,12 @@ public class Node {
 		this.c4 = c4;
 	}
 
-	public ArrayList<Node> getChildren() {
-		return children;
+	public Node getChild() {
+		return child;
 	}
 
-	public void setChildren(ArrayList<Node> children) {
-		this.children = children;
+	public void setChild(Node child) {
+		this.child = child;
 	}
 	
 	
