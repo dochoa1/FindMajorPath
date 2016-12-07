@@ -168,12 +168,82 @@ public class CourseTree {
 		return score;
 	}
 	
+	
+	
+	public  CourseID[][] recurseSemesters(Node node, CourseID[][] allSemesters, int semester, int stuYear){
+		if (semester == (8 - (stuYear * 2) + 1)){
+			return allSemesters;
+		}
+		allSemesters[semester] = generateChildren(node);
+		node.setC1(courseMap.get(allSemesters[semester][0]));
+		node.setC2(courseMap.get(allSemesters[semester][1]));
+		node.setC3(courseMap.get(allSemesters[semester][2]));
+		node.setC4(courseMap.get(allSemesters[semester][3]));
+		node.updateStuCourses();
+		setFlags(node, node.getC1());
+		setFlags(node, node.getC2());
+		setFlags(node, node.getC3());
+		setFlags(node, node.getC4());
+		
+		if (node.stuInfo.compMajorSatisfied() == true){
+			System.out.println("MAJOR SATISFIED!");
+			return allSemesters;
+		}
+		Node child = new Node();
+		node.setChild(child);
+		child.setParent(node);
+		child.setStuInfo(child.getParent().getStuInfo());
+		child.incrementSemester();
+		return recurseSemesters(child, allSemesters, semester + 1, stuYear);
+	}
+	
+	
+	
 	/*
 	 * Determines if ONE course is a valid choice for next semester (in one Node)
 	 * 
 	 */
 	
 	private boolean isValidChildCourse(Node node, Course course){
+		
+		if (course.getDept().equals("DUMMY")){
+			if (course.getCourseName().equals("MATH XXX")){
+				if(node.stuInfo.getMathCourse()>1){
+					return false;}}
+			if (course.getCourseName().equals("WRITING XXX") && node.stuInfo.getWriting() ==true){
+				return false;
+			}
+			if (course.getCourseName().equals("USID XXX") && node.stuInfo.getUsID() ==true){
+				return false;
+			}
+			
+			if (course.getCourseName().equals("INTERNAT XXX") && node.stuInfo.getInternationalism() ==true){
+				return false;
+			}
+			
+			if (course.getCourseName().equals("QUANT XXX") && node.stuInfo.getQuantitative() ==true){
+				return false;
+			}
+			
+			if (course.getCourseName().equals("LANG XXX") && node.stuInfo.getLanguage()>3){
+				return false;
+			}
+			
+			if (course.getCourseName().equals("SOCSCI XXX") && node.stuInfo.getSocialSci()>1){
+				return false;
+			}
+			
+			if (course.getCourseName().equals("NATSCI XXX") && node.stuInfo.getNaturalSci()>1){
+				return false;
+			}
+			
+			if (course.getCourseName().equals("HUMANFARTS XXX") && node.stuInfo.getHumanFArts()>2){
+				return false;
+			}
+		
+			
+			return true;
+		}
 		
 		//Checking preReqs
 		if (preReqsSatisfied(node, course) == false){
@@ -253,7 +323,7 @@ public class CourseTree {
 	
 	
 	/**
-	 * Checks if the given course has already been taken by the student
+	 * Checks if the given course has already been taken by the student, also check for cross-listed
 	 * @param node
 	 * @param course
 	 * @return
@@ -262,6 +332,16 @@ public class CourseTree {
 		if (node.getStuInfo().getStudentCourses().containsKey(course)){
 			return false;
 		}
+		
+		//Check for crossListed
+		if (!course.getCrossListed().equals("N/A")){
+			ArrayList<String> crossListedCourseString = new ArrayList<String> (Arrays.asList(course.getCrossListed().split(" ")));
+			CourseID crossID = new CourseID(crossListedCourseString.get(0), new Integer(crossListedCourseString.get(1)));
+			if (node.getStuInfo().getStudentCourses().containsKey(crossID)){
+				return false;
+			}
+		}
+		
 		return true;
 	}
 
@@ -361,6 +441,53 @@ public class CourseTree {
 		if (course.getCourseName().equals("HUMANFARTS XXX")){
 			node.stuInfo.setHumanFArts(node.stuInfo.getHumanFArts()+1);
 		}
+		
+		if (course.getCourseName().equals("Core Concepts in Computer Science")){
+			node.stuInfo.setComp123(true);
+		}
+		
+		if (course.getCourseName().equals("Object-Oriented Programming and Data Structures")){
+			node.stuInfo.setComp124(true);
+		}
+		
+		if (course.getCourseName().equals("Algorithm Design and Analysis")){
+			node.stuInfo.setComp221(true);
+		}
+		
+		if (course.getCourseName().equals("Software Design and Development")){
+			node.stuInfo.setComp225(true);
+		}
+		
+		if (course.getCourseName().equals("Computer Systems Organization")){
+			node.stuInfo.setComp240(true);
+		}
+		
+		if (course.getCourseName().equals("Theory of Computation")){
+			node.stuInfo.setComp261(true);
+		}
+		
+		if (course.getCourseName().equals("Discrete Mathematics")){
+			node.stuInfo.setMath279(true);
+		}
+		
+		if (course.getDept().equals("MATH")){
+			if (course.getCourseNum() != 279){
+				node.stuInfo.setMathCourse(node.stuInfo.getMathCourse()+1);
+			}
+		}
+		
+		if (course.getDept().equals("COMP")){
+			if (course.getCourseNum()>=300){
+				node.stuInfo.setElectives(node.stuInfo.getElectives()+1);
+			}
+		}
+		
+		if (course.getDept().equals("COMP")){
+			if (course.getCapstone() == 1){
+				node.stuInfo.setCapstone(true);
+			}
+		}
+		
 		
 	}
 	

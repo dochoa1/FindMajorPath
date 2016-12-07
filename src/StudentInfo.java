@@ -14,38 +14,41 @@ public class StudentInfo {
 	
 	Map<Course, Integer> studentCourses;
 	
+	//1 through 4
 	int yearInSchool;
 	
+	// Ex: 2017, 2018
 	int year;
 	
 	ArrayList<String> majors;
 
 	String semester;
 	
+	
 	//Here we can set flags to determine if certain requirements have been met
 	//Example:
 	//CS requirements
-	Boolean comp123;
-	Boolean comp124;
-	Boolean comp221;
-	Boolean comp225;
-	Boolean comp240;
-	Boolean comp261;
-	Boolean math279;
-	int mathCourse; //This must be greater then or equal to 2, math 279 does not count towards these two. 
-	int electives; //This must be greater than or equal to 3. Must be satisfied by courses 300 - 500. 
-	Boolean capstone; //Satisfied by comp 342, comp 346, comp 380, comp 440. comp 445, comp 479, comp 484. One of these courses must be taken
+	Boolean comp123 = false;
+	Boolean comp124 = false;
+	Boolean comp221 = false;
+	Boolean comp225 = false;
+	Boolean comp240 = false;
+	Boolean comp261 = false;
+	Boolean math279 = false;
+	int mathCourse = 0; //This must be greater then or equal to 2, math 279 does not count towards these two. 
+	int electives = 0; //This must be greater than or equal to 3. Must be satisfied by courses 300 - 500. 
+	Boolean capstone = false; //Satisfied by comp 342, comp 346, comp 380, comp 440. comp 445, comp 479, comp 484. One of these courses must be taken
 	//in the junior year or fall of the senior year. 
 
 	//General Requirements
-	Boolean writing;
-	Boolean usID;
-	Boolean internationalism;
-	Boolean quantitative;
-	int language; //This could potentially take up to 4 classes. 
-	int socialSci; //This must be greater than or equal to two.
-	int naturalSci; //This also includes math classes, must be greater than or equal to two. 
-	int humanFArts; //Humanities/Fine Arts, this must be greater than or equal to 3. 
+	Boolean writing = false;
+	Boolean usID = false;
+	Boolean internationalism = false;
+	Boolean quantitative = false;
+	int language = 0; //This could potentially take up to 4 classes. 
+	int socialSci = 0; //This must be greater than or equal to two.
+	int naturalSci = 0; //This also includes math classes, must be greater than or equal to two. 
+	int humanFArts = 0; //Humanities/Fine Arts, this must be greater than or equal to 3. 
 
 
 	
@@ -57,6 +60,28 @@ public class StudentInfo {
 	}
 	
 
+	
+	public boolean compMajorSatisfied(){
+		if(capstone==comp123==comp124==comp221==comp225==comp240==comp261==math279==writing==usID==internationalism==quantitative==true ){
+			if(language>3){
+				if(socialSci>1){
+					if(naturalSci>1){
+						if (humanFArts>2){
+							if (electives>2){
+								if(mathCourse>1){
+									return true;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	
+	
 	public Map<Course, Integer> getStudentCourses() {
 		return studentCourses;
 	}

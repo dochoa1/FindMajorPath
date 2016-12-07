@@ -52,6 +52,12 @@ public class FindPath {
 		createStudentCourses();
 		courseTree = new CourseTree(courseMap, stuInfo);
 		
+		//This is very important - this is where we initialize some flags for root node.
+		//Perhaps this should be somewhere else (like, in CourseTree) for the final project
+		for (Map.Entry<Course, Integer> entry: stuInfo.getStudentCourses().entrySet()){
+			courseTree.setFlags(courseTree.getRoot(),entry.getKey());
+		}
+		
 		//Make call to our tests here
 		test();
 		
@@ -176,6 +182,7 @@ public class FindPath {
 		scanner.close();
 					
 	stuInfo.setStudentCourses(studentCourseList);
+
 	}
 
 
@@ -210,7 +217,7 @@ public class FindPath {
 		
 		int year = stuInfo.getYear();
 		int semestersLeft = (8 - (year * 2) + 1);
-		CourseID[][] allSemesters = recurseSemesters(courseTree.getRoot(), new CourseID[semestersLeft + 1][4], 0, year);
+		CourseID[][] allSemesters = courseTree.recurseSemesters(courseTree.getRoot(), new CourseID[semestersLeft + 1][4], 0, year);
 		
 		for(int i = 0; i < semestersLeft; i++){
 			System.out.println("Semester " + (i + (8 - semestersLeft) + 1) + " Courses: ");
@@ -250,23 +257,7 @@ public class FindPath {
 		//System.out.println(studentCourses.size());
 	}
 	
-	private static CourseID[][] recurseSemesters(Node node, CourseID[][] allSemesters, int semester, int stuYear){
-		if (semester == (8 - (stuYear * 2) + 1)){
-			return allSemesters;
-		}
-		allSemesters[semester] = courseTree.generateChildren(node);
-		node.setC1(courseMap.get(allSemesters[semester][0]));
-		node.setC2(courseMap.get(allSemesters[semester][1]));
-		node.setC3(courseMap.get(allSemesters[semester][2]));
-		node.setC4(courseMap.get(allSemesters[semester][3]));
-		node.updateStuCourses();
-		Node child = new Node();
-		node.setChild(child);
-		child.setParent(node);
-		child.setStuInfo(child.getParent().getStuInfo());
-		child.incrementSemester();
-		return recurseSemesters(child, allSemesters, semester + 1, stuYear);
-	}
+
 	
 	
 }
