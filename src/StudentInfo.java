@@ -34,12 +34,22 @@ public class StudentInfo {
 	Boolean comp225 = false;
 	Boolean comp240 = false;
 	Boolean comp261 = false;
-	Boolean math279 = false;
+	//Use math279 requirement under MATH
 	int mathCourse = 0; //This must be greater then or equal to 2, math 279 does not count towards these two. 
 	int electives = 0; //This must be greater than or equal to 3. Must be satisfied by courses 300 - 500. 
 	Boolean capstone = false; //Satisfied by comp 342, comp 346, comp 380, comp 440. comp 445, comp 479, comp 484. One of these courses must be taken
 	//in the junior year or fall of the senior year. 
 
+	
+	//MATH requirements
+	Boolean math236 = false;
+	Boolean math237 = false;
+	Boolean math279 = false;
+	Boolean math155 = false;
+	Boolean CSclass = false;
+	int mathElectives = 0; //This must be greater than or equal to 5, only 300 or higher level courses count. 
+	
+	
 	//General Requirements
 	Boolean writing = false;
 	Boolean usID = false;
@@ -62,12 +72,12 @@ public class StudentInfo {
 
 	
 	public boolean compMajorSatisfied(){
-		if(capstone==comp123==comp124==comp221==comp225==comp240==comp261==math279==writing==usID==internationalism==quantitative==true ){
+		if(capstone==math236==math237==math279==math155==CSclass==writing==usID==internationalism==quantitative==true ){
 			if(language>3){
 				if(socialSci>1){
 					if(naturalSci>1){
 						if (humanFArts>2){
-							if (electives>2){
+							if (mathElectives>2){
 								if(mathCourse>1){
 									return true;
 								}
@@ -80,6 +90,28 @@ public class StudentInfo {
 		return false;
 	}
 	
+	
+	public boolean mathMajorSatisfied(){
+		if(capstone==math236==math237==math155==CSclass==math279==writing==usID==internationalism==quantitative==true ){
+			if(language>3){
+				if(socialSci>1){
+					if(naturalSci>1){
+						if (humanFArts>2){
+							if (mathElectives>4){
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
+	private boolean checkCombOrStruct(){
+		
+		return false; 
+	}
 	
 	
 	public Map<Course, Integer> getStudentCourses() {
