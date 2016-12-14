@@ -199,6 +199,64 @@ public class Interface extends Frame{
 	   JButton next = new JButton("Next");
 	   next.addActionListener(new ActionListener(){
 		      public void actionPerformed(ActionEvent e){
+				   if(math.isSelected()) {
+					   
+				   }
+				   if(compSci.isSelected()) {
+					   
+				   }
+				   if(yearDropdown.getSelectedItem().toString().equals("Freshman (0-31 credits)")){
+					   
+				   } else if(yearDropdown.getSelectedItem().toString().equals("Sophomore (32-63 credits)")){
+					   
+				   } else if(yearDropdown.getSelectedItem().toString().equals("Junior (64-95 credits)")){
+					   
+				   } else if(yearDropdown.getSelectedItem().toString().equals("Senior (96+ credits)")){
+					   
+				   }
+				   
+				   if(writingDropdown.getSelectedItem().toString().equals("Yes")){
+					   
+				   } else if(yearDropdown.getSelectedItem().toString().equals("No")){
+					   
+				   }
+				   
+				   if(USIDDropdown.getSelectedItem().toString().equals("Yes")){
+					   
+				   } else if(USIDDropdown.getSelectedItem().toString().equals("No")){
+					   
+				   }
+				   
+				   if(internationalismDropdown.getSelectedItem().toString().equals("Yes")){
+					   
+				   } else if(internationalismDropdown.getSelectedItem().toString().equals("No")){
+					   
+				   }
+				   
+				   if(quantitativeDropdown.getSelectedItem().toString().equals("Yes")){
+					   
+				   } else if(quantitativeDropdown.getSelectedItem().toString().equals("No")){
+					   
+				   }
+				   
+				   if(languageDropdown.getSelectedItem().toString().equals("0")){
+					   
+				   } else if(languageDropdown.getSelectedItem().toString().equals("1")){
+					   
+				   } else if(languageDropdown.getSelectedItem().toString().equals("2")){
+					   
+				   } else if(languageDropdown.getSelectedItem().toString().equals("3")){
+					   
+				   } else if(languageDropdown.getSelectedItem().toString().equals("4+")){
+					   
+				   }
+				   
+				   if(socialScienceDropdown.getSelectedItem().toString().equals("Yes")){
+					   
+				   } else if(socialScienceDropdown.getSelectedItem().toString().equals("No")){
+					   
+				   }
+				   
 		    	   mainPanel.removeAll();
 		    	   mainPanel.revalidate();
 		    	   mainPanel.repaint();
