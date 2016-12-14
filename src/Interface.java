@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -199,62 +200,89 @@ public class Interface extends Frame{
 	   JButton next = new JButton("Next");
 	   next.addActionListener(new ActionListener(){
 		      public void actionPerformed(ActionEvent e){
+		    	   ArrayList<String> majors = new ArrayList<String>();
 				   if(math.isSelected()) {
-					   
+					   majors.add("Math");
 				   }
+				   
 				   if(compSci.isSelected()) {
-					   
+					   majors.add("Computer Science");
 				   }
+				   FindPath.stuInfo.setMajors(majors);
 				   if(yearDropdown.getSelectedItem().toString().equals("Freshman (0-31 credits)")){
-					   
+					   FindPath.stuInfo.setYear(1);
 				   } else if(yearDropdown.getSelectedItem().toString().equals("Sophomore (32-63 credits)")){
-					   
+					   FindPath.stuInfo.setYear(2);
 				   } else if(yearDropdown.getSelectedItem().toString().equals("Junior (64-95 credits)")){
-					   
+					   FindPath.stuInfo.setYear(3);
 				   } else if(yearDropdown.getSelectedItem().toString().equals("Senior (96+ credits)")){
-					   
+					   FindPath.stuInfo.setYear(4);
 				   }
+				   
 				   
 				   if(writingDropdown.getSelectedItem().toString().equals("Yes")){
-					   
+					   FindPath.stuInfo.setWriting(true);
 				   } else if(yearDropdown.getSelectedItem().toString().equals("No")){
-					   
+					   FindPath.stuInfo.setWriting(false);
 				   }
+				   
 				   
 				   if(USIDDropdown.getSelectedItem().toString().equals("Yes")){
-					   
+					   FindPath.stuInfo.setUsID(true);
 				   } else if(USIDDropdown.getSelectedItem().toString().equals("No")){
-					   
+					   FindPath.stuInfo.setUsID(false);
 				   }
+				   
 				   
 				   if(internationalismDropdown.getSelectedItem().toString().equals("Yes")){
-					   
+					   FindPath.stuInfo.setInternationalism(true);
 				   } else if(internationalismDropdown.getSelectedItem().toString().equals("No")){
-					   
+					   FindPath.stuInfo.setInternationalism(false);
 				   }
+				   
 				   
 				   if(quantitativeDropdown.getSelectedItem().toString().equals("Yes")){
-					   
+					   FindPath.stuInfo.setQuantitative(true);
 				   } else if(quantitativeDropdown.getSelectedItem().toString().equals("No")){
-					   
+					   FindPath.stuInfo.setQuantitative(false);
 				   }
+				   
 				   
 				   if(languageDropdown.getSelectedItem().toString().equals("0")){
-					   
+					   FindPath.stuInfo.setLanguage(0);
 				   } else if(languageDropdown.getSelectedItem().toString().equals("1")){
-					   
+					   FindPath.stuInfo.setLanguage(1);
 				   } else if(languageDropdown.getSelectedItem().toString().equals("2")){
-					   
+					   FindPath.stuInfo.setLanguage(2);
 				   } else if(languageDropdown.getSelectedItem().toString().equals("3")){
-					   
+					   FindPath.stuInfo.setLanguage(3);
 				   } else if(languageDropdown.getSelectedItem().toString().equals("4+")){
-					   
+					   FindPath.stuInfo.setLanguage(4);
 				   }
 				   
-				   if(socialScienceDropdown.getSelectedItem().toString().equals("Yes")){
-					   
-				   } else if(socialScienceDropdown.getSelectedItem().toString().equals("No")){
-					   
+				   
+				   if(socialScienceDropdown.getSelectedItem().toString().equals("0")){
+					   FindPath.stuInfo.setSocialSci(0);
+				   } else if(socialScienceDropdown.getSelectedItem().toString().equals("1")){
+					   FindPath.stuInfo.setSocialSci(1);
+				   } else if(socialScienceDropdown.getSelectedItem().toString().equals("2+")){
+					   FindPath.stuInfo.setSocialSci(2);
+				   }
+				   
+				   if(naturalScienceDropdown.getSelectedItem().toString().equals("0")){
+					   FindPath.stuInfo.setNaturalSci(0);
+				   } else if(naturalScienceDropdown.getSelectedItem().toString().equals("1")){
+					   FindPath.stuInfo.setNaturalSci(1);
+				   } else if(naturalScienceDropdown.getSelectedItem().toString().equals("2+")){
+					   FindPath.stuInfo.setNaturalSci(2);
+				   }
+				   
+				   if(humanitiesDropdown.getSelectedItem().toString().equals("0")){
+					   FindPath.stuInfo.setHumanFArts(0);
+				   } else if(humanitiesDropdown.getSelectedItem().toString().equals("1")){
+					   FindPath.stuInfo.setHumanFArts(1);
+				   } else if(humanitiesDropdown.getSelectedItem().toString().equals("2+")){
+					   FindPath.stuInfo.setHumanFArts(2);
 				   }
 				   
 		    	   mainPanel.removeAll();
@@ -447,6 +475,122 @@ public class Interface extends Frame{
 		    	   crossListedCoursesPanel.add(generate);
 		    	   generate.addActionListener(new ActionListener() {
 		    		   public void actionPerformed(ActionEvent e) {
+		    			   //TODO: Storing the courses the user has taken
+		    			   if(math125.isSelected()) {
+		    				   FindPath.courseMap.put(new CourseID(,), new Course());
+		    			   }
+		    			   if(math135.isSelected()) {
+		    				   
+		    			   }
+		    			   if(math137.isSelected()) {
+		    				   
+		    			   }
+		    			   if(math155.isSelected()) {
+		    				   
+		    			   }
+		    			   if(math212.isSelected()) {
+		    				   
+		    			   }
+		    			   if(math236.isSelected()) {
+		    				   
+		    			   }
+		    			   if(math237.isSelected()) {
+		    				   
+		    			   }
+		    			   if(math279.isSelected()) {
+		    				   
+		    			   }
+		    			   if(math312.isSelected()) {
+		    				   
+		    			   }
+		    			   if(math313.isSelected()) {
+		    				   
+		    			   }
+		    			   if(math354.isSelected()) {
+		    				   
+		    			   }
+		    			   if(math376.isSelected()) {
+		    				   
+		    			   }
+		    			   if(math377.isSelected()) {
+		    				   
+		    			   }
+		    			   if(math378.isSelected()) {
+		    				   
+		    			   }
+		    			   if(math379.isSelected()) {
+		    				   
+		    			   }
+		    			   if(math432.isSelected()) {
+		    				   
+		    			   }
+		    			   if(math437.isSelected()) {
+		    				   
+		    			   }
+		    			   if(math453.isSelected()) {
+		    				   
+		    			   }
+		    			   if(math455.isSelected()) {
+		    				   
+		    			   }
+		    			   if(math471.isSelected()) {
+		    				   
+		    			   }
+		    			   if(math476.isSelected()) {
+		    				   
+		    			   }
+		    			   if(math477.isSelected()) {
+		    				   
+		    			   }
+		    			   if(CS123.isSelected()) {
+		    				   
+		    			   }
+		    			   if(CS124.isSelected()) {
+		    				   
+		    			   }
+		    			   if(CS221.isSelected()) {
+		    				   
+		    			   }
+		    			   if(CS225.isSelected()) {
+		    				   
+		    			   }
+		    			   if(CS240.isSelected()) {
+		    				   
+		    			   }
+		    			   if(CS302.isSelected()) {
+		    				   
+		    			   }
+		    			   if(CS340.isSelected()) {
+		    				   
+		    			   }
+		    			   if(CS342.isSelected()) {
+		    				   
+		    			   }
+		    			   if(CS346.isSelected()) {
+		    				   
+		    			   }
+		    			   if(CS380.isSelected()) {
+		    				   
+		    			   }
+		    			   if(CS440.isSelected()) {
+		    				   
+		    			   }
+		    			   if(CS445.isSelected()) {
+		    				   
+		    			   }
+		    			   if(CS484.isSelected()) {
+		    				   
+		    			   }
+		    			   if(crossList261.isSelected()) {
+		    				   
+		    			   }
+		    			   if(crossList365.isSelected()) {
+		    				   
+		    			   }
+		    			   if(crossList479.isSelected()) {
+		    				   
+		    			   }
+		    			   
 		    			   mainPanel.removeAll();
 				    	   mainPanel.revalidate();
 				    	   mainPanel.repaint();
