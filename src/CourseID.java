@@ -14,24 +14,26 @@ public class CourseID {
 		this.courseNum = courseNum;
 		this.dept= dept;
 	}
-
 	
+	
+	//GETTERS AND SETTERS
 	public int getCourseNum() {
 		return courseNum;
 	}
-
 	public String getDept() {
 		return dept;
 	}
+	
+	
+	
 	
 	public String toString(){
 		return dept + " " + new Integer(courseNum).toString();
 	}
 	
+
 	
-	/*
-	 * This is shitty, has to be fixed
-	 */
+	
 	@Override
 	public boolean equals(Object object) {
 		//self check
@@ -52,7 +54,8 @@ public class CourseID {
 	}
 	
 	
-	//Had to override this for the get and containsKey methods to work. Probably has something to do 
+	
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(dept, courseNum);

@@ -1,4 +1,3 @@
-import java.util.Objects;
 
 public class Course {
 
@@ -29,72 +28,46 @@ public class Course {
 		this.prereqFor=prereqFor;
 	}
 
-
-
+	
+	
+	//GETTERS AND SETTERS
+	public Course(String dept){
+		this.dept=dept;
+	}
 	public int getCourseID() {
 		return courseID;
 	}
-
-
-
 	public String getDept() {
 		return dept;
 	}
-
-
-
 	public int getCourseNum() {
 		return courseNum;
 	}
-
-
-
 	public String getCourseName() {
 		return courseName;
 	}
-
-
-
 	public String getCrossListed() {
 		return crossListed;
 	}
-
-
-
 	public int getRequired() {
 		return required;
 	}
-
-
-
 	public int getCapstone() {
 		return capstone;
 	}
-
-
-
 	public String getPreReqs() {
 		return preReqs;
 	}
-
-
-
 	public String getOffered() {
 		return offered;
 	}
-
-
-
 	public int getCredits() {
 		return credits;
 	}
-	
-	
 	public String getPrereqFor() {
 		return prereqFor;
 	}
 	
-	//Might need to change this if we ever want to print out full courses
 	public String toString(){
 		return "Course = " + dept + " " + new Integer(courseNum).toString();
 

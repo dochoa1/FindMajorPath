@@ -17,19 +17,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+/*
+ * GUI that we have not yet linked to our program
+ */
+
 public class Interface extends Frame{
 	// Constructor to setup the GUI components
 	public Interface() {
 		
 	}
 
-	// Other methods
-	
-	
-	
-	
-	
-	
 
 	public static void main(String[] args) {
 		
@@ -200,90 +197,90 @@ public class Interface extends Frame{
 	   JButton next = new JButton("Next");
 	   next.addActionListener(new ActionListener(){
 		      public void actionPerformed(ActionEvent e){
-		    	   ArrayList<String> majors = new ArrayList<String>();
-				   if(math.isSelected()) {
-					   majors.add("Math");
-				   }
-				   
-				   if(compSci.isSelected()) {
-					   majors.add("Computer Science");
-				   }
-				   FindPath.stuInfo.setMajors(majors);
-				   if(yearDropdown.getSelectedItem().toString().equals("Freshman (0-31 credits)")){
-					   FindPath.stuInfo.setYear(1);
-				   } else if(yearDropdown.getSelectedItem().toString().equals("Sophomore (32-63 credits)")){
-					   FindPath.stuInfo.setYear(2);
-				   } else if(yearDropdown.getSelectedItem().toString().equals("Junior (64-95 credits)")){
-					   FindPath.stuInfo.setYear(3);
-				   } else if(yearDropdown.getSelectedItem().toString().equals("Senior (96+ credits)")){
-					   FindPath.stuInfo.setYear(4);
-				   }
-				   
-				   
-				   if(writingDropdown.getSelectedItem().toString().equals("Yes")){
-					   FindPath.stuInfo.setWriting(true);
-				   } else if(yearDropdown.getSelectedItem().toString().equals("No")){
-					   FindPath.stuInfo.setWriting(false);
-				   }
-				   
-				   
-				   if(USIDDropdown.getSelectedItem().toString().equals("Yes")){
-					   FindPath.stuInfo.setUsID(true);
-				   } else if(USIDDropdown.getSelectedItem().toString().equals("No")){
-					   FindPath.stuInfo.setUsID(false);
-				   }
-				   
-				   
-				   if(internationalismDropdown.getSelectedItem().toString().equals("Yes")){
-					   FindPath.stuInfo.setInternationalism(true);
-				   } else if(internationalismDropdown.getSelectedItem().toString().equals("No")){
-					   FindPath.stuInfo.setInternationalism(false);
-				   }
-				   
-				   
-				   if(quantitativeDropdown.getSelectedItem().toString().equals("Yes")){
-					   FindPath.stuInfo.setQuantitative(true);
-				   } else if(quantitativeDropdown.getSelectedItem().toString().equals("No")){
-					   FindPath.stuInfo.setQuantitative(false);
-				   }
-				   
-				   
-				   if(languageDropdown.getSelectedItem().toString().equals("0")){
-					   FindPath.stuInfo.setLanguage(0);
-				   } else if(languageDropdown.getSelectedItem().toString().equals("1")){
-					   FindPath.stuInfo.setLanguage(1);
-				   } else if(languageDropdown.getSelectedItem().toString().equals("2")){
-					   FindPath.stuInfo.setLanguage(2);
-				   } else if(languageDropdown.getSelectedItem().toString().equals("3")){
-					   FindPath.stuInfo.setLanguage(3);
-				   } else if(languageDropdown.getSelectedItem().toString().equals("4+")){
-					   FindPath.stuInfo.setLanguage(4);
-				   }
-				   
-				   
-				   if(socialScienceDropdown.getSelectedItem().toString().equals("0")){
-					   FindPath.stuInfo.setSocialSci(0);
-				   } else if(socialScienceDropdown.getSelectedItem().toString().equals("1")){
-					   FindPath.stuInfo.setSocialSci(1);
-				   } else if(socialScienceDropdown.getSelectedItem().toString().equals("2+")){
-					   FindPath.stuInfo.setSocialSci(2);
-				   }
-				   
-				   if(naturalScienceDropdown.getSelectedItem().toString().equals("0")){
-					   FindPath.stuInfo.setNaturalSci(0);
-				   } else if(naturalScienceDropdown.getSelectedItem().toString().equals("1")){
-					   FindPath.stuInfo.setNaturalSci(1);
-				   } else if(naturalScienceDropdown.getSelectedItem().toString().equals("2+")){
-					   FindPath.stuInfo.setNaturalSci(2);
-				   }
-				   
-				   if(humanitiesDropdown.getSelectedItem().toString().equals("0")){
-					   FindPath.stuInfo.setHumanFArts(0);
-				   } else if(humanitiesDropdown.getSelectedItem().toString().equals("1")){
-					   FindPath.stuInfo.setHumanFArts(1);
-				   } else if(humanitiesDropdown.getSelectedItem().toString().equals("2+")){
-					   FindPath.stuInfo.setHumanFArts(2);
-				   }
+//		    	   ArrayList<String> majors = new ArrayList<String>();
+//				   if(math.isSelected()) {
+//					   majors.add("Math");
+//				   }
+//				   
+//				   if(compSci.isSelected()) {
+//					   majors.add("Computer Science");
+//				   }
+//				   FindPath.stuInfo.setMajors(majors);
+//				   if(yearDropdown.getSelectedItem().toString().equals("Freshman (0-31 credits)")){
+//					   FindPath.stuInfo.setYear(1);
+//				   } else if(yearDropdown.getSelectedItem().toString().equals("Sophomore (32-63 credits)")){
+//					   FindPath.stuInfo.setYear(2);
+//				   } else if(yearDropdown.getSelectedItem().toString().equals("Junior (64-95 credits)")){
+//					   FindPath.stuInfo.setYear(3);
+//				   } else if(yearDropdown.getSelectedItem().toString().equals("Senior (96+ credits)")){
+//					   FindPath.stuInfo.setYear(4);
+//				   }
+//				   
+//				   
+//				   if(writingDropdown.getSelectedItem().toString().equals("Yes")){
+//					   FindPath.stuInfo.setWriting(true);
+//				   } else if(yearDropdown.getSelectedItem().toString().equals("No")){
+//					   FindPath.stuInfo.setWriting(false);
+//				   }
+//				   
+//				   
+//				   if(USIDDropdown.getSelectedItem().toString().equals("Yes")){
+//					   FindPath.stuInfo.setUsID(true);
+//				   } else if(USIDDropdown.getSelectedItem().toString().equals("No")){
+//					   FindPath.stuInfo.setUsID(false);
+//				   }
+//				   
+//				   
+//				   if(internationalismDropdown.getSelectedItem().toString().equals("Yes")){
+//					   FindPath.stuInfo.setInternationalism(true);
+//				   } else if(internationalismDropdown.getSelectedItem().toString().equals("No")){
+//					   FindPath.stuInfo.setInternationalism(false);
+//				   }
+//				   
+//				   
+//				   if(quantitativeDropdown.getSelectedItem().toString().equals("Yes")){
+//					   FindPath.stuInfo.setQuantitative(true);
+//				   } else if(quantitativeDropdown.getSelectedItem().toString().equals("No")){
+//					   FindPath.stuInfo.setQuantitative(false);
+//				   }
+//				   
+//				   
+//				   if(languageDropdown.getSelectedItem().toString().equals("0")){
+//					   FindPath.stuInfo.setLanguage(0);
+//				   } else if(languageDropdown.getSelectedItem().toString().equals("1")){
+//					   FindPath.stuInfo.setLanguage(1);
+//				   } else if(languageDropdown.getSelectedItem().toString().equals("2")){
+//					   FindPath.stuInfo.setLanguage(2);
+//				   } else if(languageDropdown.getSelectedItem().toString().equals("3")){
+//					   FindPath.stuInfo.setLanguage(3);
+//				   } else if(languageDropdown.getSelectedItem().toString().equals("4+")){
+//					   FindPath.stuInfo.setLanguage(4);
+//				   }
+//				   
+//				   
+//				   if(socialScienceDropdown.getSelectedItem().toString().equals("0")){
+//					   FindPath.stuInfo.setSocialSci(0);
+//				   } else if(socialScienceDropdown.getSelectedItem().toString().equals("1")){
+//					   FindPath.stuInfo.setSocialSci(1);
+//				   } else if(socialScienceDropdown.getSelectedItem().toString().equals("2+")){
+//					   FindPath.stuInfo.setSocialSci(2);
+//				   }
+//				   
+//				   if(naturalScienceDropdown.getSelectedItem().toString().equals("0")){
+//					   FindPath.stuInfo.setNaturalSci(0);
+//				   } else if(naturalScienceDropdown.getSelectedItem().toString().equals("1")){
+//					   FindPath.stuInfo.setNaturalSci(1);
+//				   } else if(naturalScienceDropdown.getSelectedItem().toString().equals("2+")){
+//					   FindPath.stuInfo.setNaturalSci(2);
+//				   }
+//				   
+//				   if(humanitiesDropdown.getSelectedItem().toString().equals("0")){
+//					   FindPath.stuInfo.setHumanFArts(0);
+//				   } else if(humanitiesDropdown.getSelectedItem().toString().equals("1")){
+//					   FindPath.stuInfo.setHumanFArts(1);
+//				   } else if(humanitiesDropdown.getSelectedItem().toString().equals("2+")){
+//					   FindPath.stuInfo.setHumanFArts(2);
+//				   }
 				   
 		    	   mainPanel.removeAll();
 		    	   mainPanel.revalidate();
@@ -477,7 +474,6 @@ public class Interface extends Frame{
 		    		   public void actionPerformed(ActionEvent e) {
 		    			   //TODO: Storing the courses the user has taken
 		    			   if(math125.isSelected()) {
-		    				   FindPath.courseMap.put(new CourseID(,), new Course());
 		    			   }
 		    			   if(math135.isSelected()) {
 		    				   

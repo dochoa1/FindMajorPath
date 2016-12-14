@@ -3,7 +3,7 @@ import java.util.Map;
 
 
 /**
- * 
+ * Keeps track of all of the information that we have about the user
  * @author Danny and Kai
  *
  */
@@ -48,7 +48,7 @@ public class StudentInfo {
 	Boolean math155 = false;
 	Boolean CSclass = false;
 	int mathElectives = 0; //This must be greater than or equal to 5, only 300 or higher level courses count. 
-	
+	boolean mathCapstone = false;
 	
 	//General Requirements
 	Boolean writing = false;
@@ -61,23 +61,19 @@ public class StudentInfo {
 	int humanFArts = 0; //Humanities/Fine Arts, this must be greater than or equal to 3. 
 
 
-	
-	
-	
 	public StudentInfo(){
 		this.year = FindPath.CURRENT_YEAR;
 		this.semester = FindPath.CURRENT_SEMESTER;
 	}
 	
-
-	
+	//Checking is a computer science major has been satisfied
 	public boolean compMajorSatisfied(){
-		if(capstone==math236==math237==math279==math155==CSclass==writing==usID==internationalism==quantitative==true ){
+		if(capstone==comp123==comp124==comp221==comp225==comp261==comp240==writing==usID==internationalism==quantitative==true ){
 			if(language>3){
 				if(socialSci>1){
 					if(naturalSci>1){
 						if (humanFArts>2){
-							if (mathElectives>2){
+							if (electives>2){
 								if(mathCourse>1){
 									return true;
 								}
@@ -90,15 +86,17 @@ public class StudentInfo {
 		return false;
 	}
 	
-	
+	//checking to see if a math major has been satisfied. 
 	public boolean mathMajorSatisfied(){
-		if(capstone==math236==math237==math155==CSclass==math279==writing==usID==internationalism==quantitative==true ){
+		if(mathCapstone==math236==math237==math155==CSclass==math279==writing==usID==internationalism==quantitative==true){
 			if(language>3){
 				if(socialSci>1){
 					if(naturalSci>1){
 						if (humanFArts>2){
 							if (mathElectives>4){
+								if (checkSpecialMath()){
 								return true;
+								}
 							}
 						}
 					}
@@ -108,12 +106,41 @@ public class StudentInfo {
 		return false;
 	}
 	
-	private boolean checkCombOrStruct(){
-		
+	
+	/*
+	 * A method to check if a student has taken the required math courses:
+	 * Structure/Combinatorics or Real/Complex Analysis.
+	 */
+	
+	private boolean checkSpecialMath(){
+		boolean analysis = false;
+		boolean combOrStruct = false;
+		for (Map.Entry<Course, Integer> entry : studentCourses.entrySet()){
+			if (entry.getKey().getCourseName().equals("Algebraic Structures") || entry.getKey().getCourseName().equals("Combinatorics")){
+				combOrStruct = true;
+			}
+			if (entry.getKey().getCourseName().equals("Real Analysis") || entry.getKey().getCourseName().equals("Complex Analysis")){
+				analysis = true;
+			}
+		}
+		if (analysis && combOrStruct){
+			return true;
+		}
 		return false; 
 	}
 	
 	
+	
+	//GETTERS AND SETTERS
+	
+	public boolean getMathCapstone() {
+		return mathCapstone;
+	}
+
+	public void setMathCapstone(boolean mathCapstone) {
+		this.mathCapstone = mathCapstone;
+	}
+
 	public Map<Course, Integer> getStudentCourses() {
 		return studentCourses;
 	}
@@ -162,6 +189,47 @@ public class StudentInfo {
 	public void setMath279(Boolean math279) {
 		this.math279 = math279;
 	}
+	
+	public Boolean getMath236() {
+		return math236;
+	}
+
+	public void setMath236(Boolean math236) {
+		this.math236 = math236;
+	}
+
+	public Boolean getMath237() {
+		return math237;
+	}
+
+	public void setMath237(Boolean math237) {
+		this.math237 = math237;
+	}
+
+	public Boolean getMath155() {
+		return math155;
+	}
+
+	public void setMath155(Boolean math155) {
+		this.math155 = math155;
+	}
+
+	public Boolean getCSclass() {
+		return CSclass;
+	}
+
+	public void setCSclass(Boolean cSclass) {
+		CSclass = cSclass;
+	}
+
+	public int getMathElectives() {
+		return mathElectives;
+	}
+
+	public void setMathElectives(int mathElectives) {
+		this.mathElectives = mathElectives;
+	}
+
 	public int getMathCourse() {
 		return mathCourse;
 	}
@@ -202,43 +270,40 @@ public class StudentInfo {
 		return quantitative;
 	}
 	public void setQuantitative(Boolean quantitative) {
-		this.quantitative = quantitative;
-	}
+		this.quantitative = quantitative;}
+	
 	public int getLanguage() {
-		return language;
-	}
+		return language;}
+	
 	public void setLanguage(int language) {
-		this.language = language;
-	}
+		this.language = language;}
+	
 	public int getSocialSci() {
-		return socialSci;
-	}
+		return socialSci;}
+	
 	public void setSocialSci(int socialSci) {
-		this.socialSci = socialSci;
-	}
+		this.socialSci = socialSci;}
+	
 	public int getNaturalSci() {
-		return naturalSci;
-	}
+		return naturalSci;}
+	
 	public void setNaturalSci(int naturalSci) {
-		this.naturalSci = naturalSci;
-	}
+		this.naturalSci = naturalSci;}
+	
 	public int getHumanFArts() {
-		return humanFArts;
-	}
+		return humanFArts;}
+	
 	public void setHumanFArts(int humanFArts) {
-		this.humanFArts = humanFArts;
-	}
+		this.humanFArts = humanFArts;}
+	
 	public int getYear() {
-		return year;
-	}
+		return year;}
+	
 	public void setYear(int year) {
-		this.year = year;
-	}
+		this.year = year;}
 		
 	public int getYearInSchool() {
-		return yearInSchool;
-	}
-
+		return yearInSchool;}
 
 	public void setYearInSchool(int yearInSchool) {
 		this.yearInSchool = yearInSchool;
@@ -255,4 +320,5 @@ public class StudentInfo {
 	public void setMajors(ArrayList<String> majors) {
 		this.majors = majors;
 	}
+	
 }

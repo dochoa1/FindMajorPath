@@ -19,8 +19,6 @@ import com.opencsv.CSVReader;
 
 public class FindPath {
 	
-	
-	//BE SURE TO SET THESE BEFORE RUNNING THE PROGRAM!!!
 	public static final int CURRENT_YEAR = 2017;
 	public static final String CURRENT_SEMESTER = "SPRING"; //Can be either "SPRING" or "FALL"
 	
@@ -35,11 +33,10 @@ public class FindPath {
 	
 	
 	/*
-	 * Initialize file and courseMap - make sure filename is correct here
+	 * Initialize courseMap and courseTree
 	 */
 	public static void init() throws NumberFormatException, IOException{
-		//There a very specific ways that these csv files need to be formatted so make sure they fit ALL the following 
-		//specifications: ILL PUT THESE LATER
+		
 		Map<CourseID, Course> courseMap1 = createCourses(new File("CoursesCSVs/ShortestPathMajorCS.csv"));
 		Map<CourseID, Course> courseMap2 = createCourses(new File("CoursesCSVs/ShortestPathMajorMATH.csv"));
 		Map<CourseID, Course> courseMap3 = createCourses(new File("CoursesCSVs/DummyCourses.csv"));
@@ -51,17 +48,11 @@ public class FindPath {
 		
 		createStudentCourses();
 		courseTree = new CourseTree(courseMap, stuInfo);
-		
-		//This is very important - this is where we initialize some flags for root node.
-		//Perhaps this should be somewhere else (like, in CourseTree) for the final project
+		//Updates the studentInfo object based on the students inputted courses
 		for (Map.Entry<Course, Integer> entry: stuInfo.getStudentCourses().entrySet()){
-			courseTree.setFlags(courseTree.getRoot(),entry.getKey());
+			courseTree.setFlags(courseTree.getRoot(),entry.getKey(),0);
 		}
 		
-		//Make call to our tests here
-		test();
-		
-
 	}
 	
 	
@@ -71,8 +62,127 @@ public class FindPath {
 	
 	public static void main(String[] args) throws Exception {
 		init();
+		findPath();
+		}
+	
+	
+	
+	/*
+	 * Method that finds the shortest path to the desired major
+	 */
+private static void findPath(){
+		
+		int year = stuInfo.getYear();
+		int semestersLeft = (8 - (year * 2) + 1);
+		CourseID[][] allSemesters = courseTree.recurseSemesters(courseTree.getRoot(), new CourseID[semestersLeft + 1][4], 0, year);
+		
+		if (allSemesters!=null){
+		
+			for(int i = 0; i < semestersLeft; i++){
+				System.out.println("Semester " + (i + (8 - semestersLeft) + 1) + " Courses: ");
+				for(int j = 0; j < 4; j++){
+					if (allSemesters[i][j] != null && allSemesters[i][j].getDept().equals("DUMMY")){
+						System.out.print(courseMap.get(allSemesters[i][j]).getCourseName() + " ");
+					}
+					else if (allSemesters[i][j]==null){
+						System.out.print("FREE ");
+					}
+					else{
+						System.out.print(allSemesters[i][j] + " ");
+					}
+				}
+				System.out.println("");
+			}
+		}
 		
 	}
+	
+	
+
+	
+	
+	/*
+	 * Method that stores information about the user in a StudentInfo object
+	 */
+	
+	private static void createStudentCourses (){
+		Map<Course, Integer> studentCourseList = new HashMap<Course, Integer>();
+				
+		@SuppressWarnings("resource")
+		Scanner scanner = new Scanner (System.in);
+		System.out.print("What year in college are you? (1 - 4) ");
+		int stuYear = scanner.nextInt();
+		if (stuYear >= 1 && stuYear <= 4){
+			stuInfo.setYear(stuYear);
+		}
+		else{
+			System.out.print("You entered something wrong, sorry.");
+			System.exit(0);
+		}
+		ArrayList<String> majors = new ArrayList<String>(); 
+		
+		while(true){
+			System.out.print("What departments do you plan do major in? (Enter QUIT when you are done): ");
+			String major = scanner.next().toUpperCase();
+			if (major.equals("QUIT")){
+				break;
+			}
+			majors.add(major);
+		}
+		stuInfo.setMajors(majors);
+		
+		System.out.print("Have you satisfied your writing requirement? (Y or N): ");
+		if (scanner.next().toUpperCase().equals("Y")){
+			stuInfo.setWriting(true);}
+		System.out.print("Have you satisfied your U.S. Identities requirement? (Y or N): ");
+		if (scanner.next().toUpperCase().equals("Y")){
+			stuInfo.setUsID(true);}
+		System.out.print("Have you satisfied your Internationalism requirement? (Y or N): ");
+		if (scanner.next().toUpperCase().equals("Y")){
+			stuInfo.setInternationalism(true);}
+		System.out.print("Have you satisfied your Quantitative requirement? (Y or N): ");
+		String a = scanner.next();	
+		stuInfo.setQuantitative(true);
+		
+		System.out.print("What is the equivalent number of language courses you have credit for? (0-4): ");
+		stuInfo.setLanguage(scanner.nextInt());
+		System.out.print("How many Social Science classes have you taken? (0-2) ");
+		stuInfo.setSocialSci(scanner.nextInt());
+		System.out.print("How many Natural Science classes have you taken? (0-2) ");
+		String b = scanner.next();	
+		stuInfo.setNaturalSci(2);
+		System.out.print("How many Humanities/Fine Arts classes have you taken? (0-3) ");
+		stuInfo.setHumanFArts(scanner.nextInt());
+		
+		System.out.println(" ");
+		System.out.println("Now, enter all of the CS/Math courses that you have taken/skipped:");
+		System.out.println(" ");
+		
+		//Gather inputted courses from the user, store them in studentInfo object
+		while (true){
+			System.out.print("Enter a course Department or QUIT if no more courses:  ");  
+			String deptName = scanner.next().toUpperCase(); // Get what the user types.
+			if (deptName.equals("QUIT")){
+				break;
+			}
+			System.out.print("Enter a course Number: "); 
+			int courseNum = scanner.nextInt();
+			CourseID testID = new CourseID(deptName, courseNum);
+			System.out.println(testID);
+			if (courseMap.containsKey(testID)) {
+				studentCourseList.put(courseMap.get(testID), new Integer(1));
+				System.out.println(deptName + " " + courseNum + " has been added.");
+			}
+			else {
+				System.out.println("Sorry that course is not listed under our register.");
+			}
+		}
+		scanner.close();
+					
+	stuInfo.setStudentCourses(studentCourseList);
+
+	}
+
 	
 	
 	/*
@@ -104,88 +214,23 @@ public class FindPath {
 	}
 	
 	
+	
 	/*
-	 * Preliminary method that creates a list of Courses that the user has taken
+	 * Helper method to merge the data from the CSVs into one courseMap
 	 */
 	
-	private static void createStudentCourses (){
-		Map<Course, Integer> studentCourseList = new HashMap<Course, Integer>();
-				
-		@SuppressWarnings("resource")
-		Scanner scanner = new Scanner (System.in);
-		System.out.print("What year in college are you? (1 - 4) ");
-		int stuYear = scanner.nextInt();
-		if (stuYear >= 1 && stuYear <= 4){
-			stuInfo.setYear(stuYear);
-		}
-		else{
-			System.out.print("You entered something wrong sorry yo.");
-			System.exit(0);
-		}
-		ArrayList<String> majors = new ArrayList<String>(); 
-		int majorsIndex = 0;
-		while(true){
-			System.out.print("What departments do you plan do major in? (Enter QUIT when you are done): ");
-			String major = scanner.next().toUpperCase();
-			if (major.equals("QUIT")){
-				break;
-			}
-			majors.add(major);
-			majorsIndex ++;
-		}
-		stuInfo.setMajors(majors);
-		
-		System.out.print("Have you satisfied your writing requirement? (Y or N): ");
-		if (scanner.next().toUpperCase().equals("Y")){
-			stuInfo.setWriting(true);}
-		System.out.print("Have you satisfied your U.S. Identities requirement? (Y or N): ");
-		if (scanner.next().toUpperCase().equals("Y")){
-			stuInfo.setUsID(true);}
-		System.out.print("Have you satisfied your Internationalism requirement? (Y or N): ");
-		if (scanner.next().toUpperCase().equals("Y")){
-			stuInfo.setInternationalism(true);}
-		System.out.print("Have you satisfied your Quantitative requirement? (Y or N): ");
-		if (scanner.next().toUpperCase().equals("Y")){
-			stuInfo.setQuantitative(true);}
-		
-		System.out.print("How many language classes have you taken (1-4): ");
-		if (scanner.next().toUpperCase().equals("Y")){
-			stuInfo.setLanguage(scanner.nextInt());}
-		
-		System.out.print("How many Social Science classes have you taken? ");
-		stuInfo.setSocialSci(scanner.nextInt());
-		System.out.print("How many Natural Science classes have you taken? ");
-		stuInfo.setNaturalSci(scanner.nextInt());
-		System.out.print("How many HumanFArts classes have you taken? ");
-		stuInfo.setHumanFArts(scanner.nextInt());
-		
-		
-		//Gather inputted courses from the user, store them in studentInfo object
-		while (true){
-			System.out.print("Enter a course Department or QUIT if no more courses:  ");  
-			String deptName = scanner.next().toUpperCase(); // Get what the user types.
-			if (deptName.equals("QUIT")){
-				break;
-			}
-			System.out.print("Enter a course Number: "); 
-			int courseNum = scanner.nextInt();
-			CourseID testID = new CourseID(deptName, courseNum);
-			System.out.println(testID);
-			if (courseMap.containsKey(testID)) {
-				studentCourseList.put(courseMap.get(testID), new Integer(1));
-				System.out.println(deptName + " " + courseNum + " has been added.");
-			}
-			else {
-				System.out.println("Sorry that course is not listed under our register.");
+	public static Map<CourseID, Course> mergeMaps(Map<CourseID, Course> map1, Map<CourseID, Course> map2){
+		for (Map.Entry<CourseID,Course> entry : map2.entrySet()){
+			if (map1.get(entry.getKey()) == null){
+				map1.put(entry.getKey(),entry.getValue());
 			}
 		}
-		scanner.close();
-					
-	stuInfo.setStudentCourses(studentCourseList);
-
+		return map1;
 	}
-
-
+	
+	
+	//Getters and setters
+	
 	public static Map<CourseID, Course> getCourseMap() {
 		return courseMap;
 	}
@@ -202,63 +247,8 @@ public class FindPath {
 		FindPath.stuInfo = stuInfo;
 	}
 	
-	public static Map<CourseID, Course> mergeMaps(Map<CourseID, Course> map1, Map<CourseID, Course> map2){
-		for (Map.Entry<CourseID,Course> entry : map2.entrySet()){
-			if (map1.get(entry.getKey()) == null){
-				map1.put(entry.getKey(),entry.getValue());
-			}
-		}
-		return map1;
-	}
 
-	
-	
-	private static void test(){
-		
-		int year = stuInfo.getYear();
-		int semestersLeft = (8 - (year * 2) + 1);
-		CourseID[][] allSemesters = courseTree.recurseSemesters(courseTree.getRoot(), new CourseID[semestersLeft + 1][4], 0, year);
-		
-		for(int i = 0; i < semestersLeft; i++){
-			System.out.println("Semester " + (i + (8 - semestersLeft) + 1) + " Courses: ");
-			for(int j = 0; j < 4; j++){
-				System.out.print(allSemesters[i][j] + " ");
-			}
-			System.out.println("");
-		}
-		
-		//CourseID[] top4 = courseTree.generateChildren(courseTree.root);
-		
-		
-//		CourseID testID = new CourseID("COMP", 484);
-//		boolean satisfied = courseTree.preReqsSatisfied(courseTree.getRoot(), courseMap.get(testID));
-//		System.out.println("Are pre-reqs for COMP 484 met?");
-//		System.out.println(satisfied);
-//		
-//		boolean courseNotTaken = courseTree.courseNotTaken(courseTree.getRoot(), courseMap.get(testID));
-//		System.out.println("Have you NOT taken COMP 484 yet? ");
-//		System.out.println(courseNotTaken);
-		
-//		System.out.println("Going to start testing the scoring function: ");
-//		for (Course value : courseMap.values()){
-//			System.out.print(value.getCourseName() + " ");
-//			System.out.println(courseTree.generateScore(courseTree.getRoot(), value));
-//		}
-		
 
-		
-		
-		//Print out all key/value pairs in the courseMap
-//		for (Map.Entry<CourseID, Course> entry : courseMap.entrySet()){
-//		    System.out.println(entry.getKey() + "/" + entry.getValue());}
-		
 
-		//Check to see how many Courses got added to studentCourses 
-		//System.out.println(studentCourses.size());
-	}
-	
-
-	
-	
 }
 	
